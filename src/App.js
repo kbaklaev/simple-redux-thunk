@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useDispatch, useSelector } from "react-redux";
+import "./App.css";
+
+import { getPersonsWithThunk } from "./redux/actions";
 
 function App() {
+  const dispatch = useDispatch();
+  const persons = useSelector((state) => state);
+
+  const clickHandler = () => {
+    dispatch(getPersonsWithThunk())
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <main>
+        <section>
+          <button type="button" onClick={clickHandler}>
+            start
+          </button>
+        </section>
+        <section>
+          <ul>
+            {persons?.map((person) => (
+              <li key={person.id}>{person.name} as {person.username}</li>
+            ))}
+          </ul>
+        </section>
+      </main>
     </div>
   );
 }
